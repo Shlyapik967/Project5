@@ -1,58 +1,41 @@
-class TaskManager {
-    constructor() {
-        this.tasks = [];
+let tasks = [];
+
+// Function to add a new task
+function addTask(name) {
+    if (name === '') {
+        console.log('Поле задач не может быть пустым.');
+        return;
     }
+    tasks.push({name: name, completed: false});
+}
 
-    addTask(name) {
-        if (!name || name.trim() === "") {
-            console.log("Ошибка: название задачи не может быть пустым.");
-            return;
-        }
-
-        this.tasks.push({ name: name, completed: false });
-        console.log(`Добавлена задача: "${name}"`);
-    }
-
-    completeTask(name) {
-        const task = this.tasks.find(task => task.name === name);
-        if (task) {
+// Function to mark a task as completed
+function completeTask(name) {
+    let found = false;
+    for (let task of tasks) {
+        if (task.name === name) {
             task.completed = true;
-            console.log(`Задача "${name}" выполнена.`);
-        } else {
-            console.log(`Ошибка: задача "${name}" не найдена.`);
+            found = true;
+            break;
         }
     }
-
-    deleteTask(name) {
-        const index = this.tasks.findIndex(task => task.name === name);
-        if (index !== -1) {
-            const removedTask = this.tasks.splice(index, 1);
-            console.log(`Удалена задача: "${removedTask[0].name}"`);
-        } else {
-            console.log(`Ошибка: задача "${name}" не найдена.`);
-        }
-    }
-
-    displayTasks() {
-        if (this.tasks.length === 0) {
-            console.log("Нет задач в списке.");
-            return;
-        }
-
-        console.log("Список задач:");
-        this.tasks.forEach(task => {
-            const status = task.completed ? "Выполнена" : "Не выполнена";
-            console.log(`- "${task.name}": ${status}`);
-        });
+    if (!found) {
+        console.log('Задача не найдена дайте имя.');
     }
 }
 
-const myTasks = new TaskManager();
-myTasks.addTask("Купить продукты");
-myTasks.addTask("Сделать домашнее задание");
-myTasks.displayTasks();
-myTasks.completeTask("Купить продукты");
-myTasks.displayTasks();
-myTasks.deleteTask("Сделать домашнее задание");
-myTasks.displayTasks();
-myTasks.deleteTask("Не существующая задача");
+// Function to delete a task
+function deleteTask(name) {
+    let index = tasks.findIndex(task => task.name === name);
+    if (index !== -1) {
+        tasks.splice(index, 1);
+    } else {
+        console.log('Задача не найдена.');
+    }
+}
+
+function displayTasks() {
+    for (let task of tasks) {
+        console.log(`Task: ${task.name}, Status: ${task.completed ? 'Завершено' : 'Не завершено'}`);
+    }
+}
