@@ -1,6 +1,5 @@
 let tasks = [];
 
-// Function to add a new task
 function addTask(name) {
     if (name === '') {
         console.log('Поле задач не может быть пустым.');
@@ -9,7 +8,6 @@ function addTask(name) {
     tasks.push({name: name, completed: false});
 }
 
-// Function to mark a task as completed
 function completeTask(name) {
     let found = false;
     for (let task of tasks) {
@@ -24,7 +22,6 @@ function completeTask(name) {
     }
 }
 
-// Function to delete a task
 function deleteTask(name) {
     let index = tasks.findIndex(task => task.name === name);
     if (index !== -1) {
